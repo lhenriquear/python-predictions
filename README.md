@@ -12,7 +12,7 @@ For more detailed information on the loading aspect of the process into BigQuery
 
 ## Automating the Workflow
 
-In order to automate the workflow, a Cloud Function was created that triggers whenever a new file is uploaded to the bucket in Cloud Storage. This function, in turn, invokes a Databricks job (details can be found in the [job.json file](https://github.com/lhenriquear/python-predictions/blob/main/job.json). This job uses as source code the file [Pipeline.py](https://github.com/lhenriquear/python-predictions/blob/main/Pipeline.py)
+In order to automate the workflow, a [Cloud Function](https://github.com/lhenriquear/python-predictions/blob/main/main.py) was created that triggers whenever a new file is uploaded to the bucket in Cloud Storage. This function, in turn, invokes a Databricks job (details can be found in the [job.json file](https://github.com/lhenriquear/python-predictions/blob/main/job.json). This job uses as source code the file [Pipeline.py](https://github.com/lhenriquear/python-predictions/blob/main/Pipeline.py)
 
 For a better understanding of the flow of operations, please consult the architecture diagram in the [arch.png file](https://github.com/lhenriquear/python-predictions/blob/main/arch.png).
 
@@ -28,7 +28,7 @@ Here's an example of a query:
 SELECT * FROM `chrome-parity-398807.airquality.aqiTable`
 ```
 
-Besides BigQuery, the data can also be viewed in the CSV file present in this repository.
+Besides BigQuery, the data can also be viewed using the [link](https://docs.google.com/spreadsheets/d/1TELXDGtGKG3s674zB-ipJh6cIqY7KiXS-rcJ0OpfTGI/edit?usp=sharing).
 
 > **Note
    All deployed services will be decommissioned on Friday, 22/09/2023.
