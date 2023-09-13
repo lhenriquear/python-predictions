@@ -63,14 +63,14 @@ aqi_value = [
 # Define the window
 partition = Window.partitionBy('city', 'parameter').orderBy('date_unix').rangeBetween(-86400, 0)
 
-# Calculate the 24-hour rolling average for each city and parameter
+# rolling average 
 df_filtered = df_filtered.withColumn('rolling_avg', avg('value').over(partition))
 
-# Define the UDFs
+
 calculate_pm25_aqi_udf = udf(lambda value: calculate_aqi(value, pm25_breakpoints, aqi_value), DoubleType())
 calculate_pm10_aqi_udf = udf(lambda value: calculate_aqi(value, pm10_breakpoints, aqi_value), DoubleType())
 
-# Calculate AQI for PM2.5 and PM10 and create new columns 'pm25_aqi' and 'pm10_aqi'
+
 df_filtered = df_filtered.withColumn(
     'pm25_aqi',
     when(df_filtered['parameter'] == 'pm25', calculate_pm25_aqi_udf(df_filtered['rolling_avg'])).otherwise(None)

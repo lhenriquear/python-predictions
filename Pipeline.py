@@ -24,14 +24,14 @@ df_filtered = df.filter(
   col('parameter').isin(['o3', 'no2', 'co', 'pm10', 'pm25'])
 )
 
-# Extract the timestamp field from 'date.local' struct
+# Extract the timestamp field from 'date' struct
 df_filtered = df_filtered.withColumn('timestamp_field', col('date.utc'))
 
 # Convert the extracted timestamp field to Unix timestamp
 df_filtered = df_filtered.withColumn('date_unix', unix_timestamp('timestamp_field', 'yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\''))
 
 
-# Define AQI calculation functions for PM2.5 and PM10 using a lookup table
+# AQI calculation 
 def calculate_aqi(PMobs, PM_breakpoints, AQI_values):
     for i, (low, high) in enumerate(PM_breakpoints):
         if low <= PMobs <= high:
@@ -41,7 +41,7 @@ def calculate_aqi(PMobs, PM_breakpoints, AQI_values):
             return AQI
     return None
 
-# Define AQI breakpoints lookup tables for PM2.5 and PM10
+# Define AQI breakpoints 
 pm25_breakpoints = [
     (0, 12.0), (12.1, 35.4), (35.5, 55.4), (55.5, 150.4), (150.5, 250.4), (250.5, 350.4), (350.5, 500.4), (500.5, 999999.9)
 ]
@@ -62,4 +62,26 @@ df_filtered = df_filtered.withColumn('rolling_avg', avg('value').over(partition)
 
 # Define the UDFs
 calculate_pm25_aqi_udf = udf(lambda value: calculate_aqi(value, pm25_breakpoints, aqi_value), DoubleType())
-calculate
+calculate_pm10_aqi_udf = udf(lambda value: calculate_aqi(value, pm10_breakpoints, aqi_value), DoubleType())
+
+# Calculate AQI for PM2.5 and PM10 and create new columns 'pm25_aqi' and 'pm10_aqi'
+df_filtered = df_filtered.withColumn(
+    'pm25_aqi',
+    when(df_filtered['parameter'] == 'pm25', calculate_pm25_aqi_udf(df_filtered['rolling_avg'])).otherwise(None)
+)
+
+df_filtered = df_filtered.withColumn(
+    'pm10_aqi',
+    when(df_filtered['parameter'] == 'pm10', calculate_pm10_aqi_udf(df_filtered['rolling_avg'])).otherwise(None)
+)
+
+
+countries = ['GB', 'NL', 'FR']
+
+for country in countries:
+    df_country = df_filtered.filter(col('country') == country)
+    
+    bucket = 'ppbucket01'
+    table = "airquality.aqiTable"
+
+    df_country.write.format("bigquery").option("temporaryGcsBucket", bucket).option("table", table).mode("append").save() 

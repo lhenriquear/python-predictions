@@ -1,0 +1,66 @@
+{
+    "job_id": 277805041160854,
+    "creator_user_name": "pythonpredictions05@gmail.com",
+    "run_as_user_name": "pythonpredictions05@gmail.com",
+    "run_as_owner": true,
+    "settings": {
+        "name": "load_json",
+        "email_notifications": {
+            "no_alert_for_skipped_runs": false
+        },
+        "webhook_notifications": {},
+        "timeout_seconds": 0,
+        "max_concurrent_runs": 1,
+        "tasks": [
+            {
+                "task_key": "load_json",
+                "run_if": "ALL_SUCCESS",
+                "notebook_task": {
+                    "notebook_path": "/Repos/pythonpredictions05@gmail.com/python-predictions/Pipeline",
+                    "base_parameters": {
+                        "json_path": ""
+                    },
+                    "source": "WORKSPACE"
+                },
+                "job_cluster_key": "Job_cluster",
+                "max_retries": 1,
+                "min_retry_interval_millis": 300000,
+                "retry_on_timeout": false,
+                "timeout_seconds": 0,
+                "email_notifications": {
+                    "on_failure": [
+                        "pythonpredictions05@gmail.com"
+                    ]
+                },
+                "notification_settings": {
+                    "no_alert_for_skipped_runs": true,
+                    "no_alert_for_canceled_runs": true,
+                    "alert_on_last_attempt": true
+                }
+            }
+        ],
+        "job_clusters": [
+            {
+                "job_cluster_key": "Job_cluster",
+                "new_cluster": {
+                    "spark_version": "13.3.x-scala2.12",
+                    "gcp_attributes": {
+                        "use_preemptible_executors": false,
+                        "availability": "ON_DEMAND_GCP",
+                        "zone_id": "HA"
+                    },
+                    "node_type_id": "n2-highmem-4",
+                    "spark_env_vars": {
+                        "PYSPARK_PYTHON": "/databricks/python3/bin/python3"
+                    },
+                    "enable_elastic_disk": false,
+                    "data_security_mode": "SINGLE_USER",
+                    "runtime_engine": "STANDARD",
+                    "num_workers": 8
+                }
+            }
+        ],
+        "format": "MULTI_TASK"
+    },
+    "created_time": 1694595155949
+}
