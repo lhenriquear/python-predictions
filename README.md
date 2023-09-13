@@ -31,5 +31,5 @@ SELECT * FROM `chrome-parity-398807.airquality.aqiTable`
 Besides BigQuery, the data can also be viewed in the CSV file present in this repository.
 
 > **Note
-    All deployed services will be erased in September, 22, 2023
+   All deployed services will be decommissioned on Friday, 22/09/2023.
 
