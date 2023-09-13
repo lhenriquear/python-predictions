@@ -16,13 +16,13 @@ In order to automate the workflow, a [Cloud Function](https://github.com/lhenriq
 
 For a better understanding of the flow of operations, please consult the architecture diagram in the [arch.png file](https://github.com/lhenriquear/python-predictions/blob/main/arch.png).
 
-## Data Analysis and Viewing
+## How To Access
 
-For data analysis, I recommend using a BigQuery query as it preserves the JSON structure of the fields. 
+I recommend using a BigQuery query as it preserves the JSON structure of the fields. 
 
-To access the data table in BigQuery, please use a GCP Account to query the table `chrome-parity-398807.airquality.aqiTable`.
+1 - Use a GCP Account to query the table `chrome-parity-398807.airquality.aqiTable`.
 
-Here's an example of a query:
+2 - Query the data:
 
 ```sql
 SELECT * FROM `chrome-parity-398807.airquality.aqiTable`
