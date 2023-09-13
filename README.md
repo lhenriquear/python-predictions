@@ -8,7 +8,7 @@ In this project, I utilized Google Cloud Platform (GCP) to create an orchestrate
 2. Subsequently, a native table was created for data analysis.
 3. Afterwards, I leveraged GCP Databricks for data processing. The DBFS was utilized for the storage of all JSON files, which were then processed in accordance to the specifications of the test assessment.
 
-For more detailed information on the loading aspect of the process into BigQuery, please refer to the [File Load BQ] file.
+For more detailed information on the loading aspect of the process into BigQuery, please refer to the (Load BQ)[https://github.com/lhenriquear/python-predictions/blob/main/Load%20BQ.py] file.
 
 ## Automating the Workflow
 
