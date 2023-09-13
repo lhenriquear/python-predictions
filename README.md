@@ -22,7 +22,7 @@ I recommend using a BigQuery query as it preserves the JSON structure of the fie
 
 1 - Use a GCP Account to query the table `chrome-parity-398807.airquality.aqiTable`.
 
-2 - Query the data:
+2 - Query the data in the BigQuery:
 
 ```sql
 SELECT * FROM `chrome-parity-398807.airquality.aqiTable`
